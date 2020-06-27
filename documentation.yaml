@@ -1,0 +1,772 @@
+openapi: 3.0.0
+info:
+  title: Delilah Restó API
+  description: API del proyecto Delilah Restó. Aplicación para restó de comidas rápidas.
+  contact:
+    name: Santiago Fain Binda
+    email: sfainbinda@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: admin
+  description: Operaciones autorizadas para admin
+- name: usuarios
+  description: Operaciones autorizadas para usuarios
+paths:
+  /clientes/signup:
+    post:
+      tags:
+      - usuarios
+      summary: Alta de usuario
+      description: Creación y alta de cliente en la base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        "200":
+          description: Creado.
+        "400":
+          description: Error en los datos (formato).
+        "500":
+          description: Usuario/Email no disponible.
+  /clientes/login:
+    post:
+      tags:
+      - usuarios
+      summary: Login en sistema
+      description: Ingreso/login al sistema.
+      requestBody:
+        description: Usuario puede completarse con usuario o email.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginData'
+        required: true
+      responses:
+        "200":
+          description: Usuario logueado. Token asignado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+        "400":
+          description: Faltan datos.
+        "401":
+          description: Usuario o contraseña incorrecta.
+        "500":
+          description: Usuario no registrado.
+  /clientes/productos:
+    get:
+      tags:
+      - usuarios
+      summary: Obtener listado de productos
+      description: Devuelve el listado completo de productos (disponibles y no disponibles).
+      parameters:
+      - name: token
+        in: header
+        description: El usuario obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: Listado de productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/products'
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "500":
+          description: No hay productos disponibles.
+  /clientes/productos/favoritos:
+    get:
+      tags:
+      - usuarios
+      summary: Listado de favoritos del usuario
+      description: Lista completa de todos los productos que alguna vez ha compraado
+        el usuario.
+      parameters:
+      - name: token
+        in: header
+        description: El usuario obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: Listado de productos favoritos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/favorite'
+        "500":
+          description: Aún no hay favoritos.
+  /clientes/pedido:
+    post:
+      tags:
+      - usuarios
+      summary: Alta de pedido
+      description: Creación y alta en base de datos de pedido realizado por el usuario.
+      parameters:
+      - name: token
+        in: header
+        description: El usuario obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      requestBody:
+        description: Detalle del pedido realizado por el usuario.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newOrder'
+        required: true
+      responses:
+        "200":
+          description: Pedido realizado.
+        "500":
+          description: No fue posible realizar el pedido.
+  /clientes/pedido/:id:
+    get:
+      tags:
+      - usuarios
+      summary: Resumen del pedido.
+      description: Resumen completo del pedido realizado por el usuario.
+      parameters:
+      - name: idOrder
+        in: path
+        description: Mediante este valor, el id del pedido, se podrá obtener el resumen
+          del pedido.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
+      - name: token
+        in: header
+        description: El usuario obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: Resumen del pedido.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orderResume'
+        "500":
+          description: No tiene los permisos para realizar esta operación o el pedido
+            no existe.
+  /admin/login:
+    post:
+      tags:
+      - admin
+      summary: Login en sistema
+      description: Ingreso/login al sistema.
+      requestBody:
+        description: Usuario puede completarse con usuario o email.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginData'
+        required: true
+      responses:
+        "200":
+          description: Administrador logueado. Token asignado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+        "400":
+          description: Faltan datos.
+        "401":
+          description: Usuario o contraseña incorrecta.
+        "500":
+          description: Usuario no registrado.
+  /admin/productos:
+    get:
+      tags:
+      - admin
+      summary: Obtener listado de productos
+      description: Devuelve el listado completo de productos (disponibles y no disponibles).
+      parameters:
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: Listado de productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/products'
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "500":
+          description: No hay productos disponibles.
+  /admin/producto/:id:
+    get:
+      tags:
+      - admin
+      summary: Obtener un producto por su id.
+      description: Devuelve el detalle completo del producto buscado.
+      parameters:
+      - name: idProduct
+        in: path
+        description: Mediante este valor, el id del producto, se podrá obtener el
+          detalle completo del producto.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 2
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: Detalle del producto.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "404":
+          description: El producto no existe.
+    put:
+      tags:
+      - admin
+      summary: Modificar un producto.
+      description: Obtener, modificar y actualizar en base de datos un producto por
+        su id.
+      parameters:
+      - name: idProduct
+        in: path
+        description: Mediante este valor, el id del producto, se podrá obtener el
+          producto para su posterior modificación.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 2
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "201":
+          description: Producto actualizado exitosamente.
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "404":
+          description: El producto que intenta modificar no existe.
+        "500":
+          description: Error al modificar el producto.
+    delete:
+      tags:
+      - admin
+      summary: Eliminar un producto.
+      description: Eliminar de la base de datos un producto.
+      parameters:
+      - name: idProduct
+        in: path
+        description: Mediante este valor, el id del producto, se podrá obtener el
+          producto para su posterior eliminación.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 2
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: El producto ha sido eliminado de manera exitosa.
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "404":
+          description: El producto que intenta eliminar no existe.
+        "500":
+          description: Error la intentar eliminar el producto.
+  /admin/producto:
+    post:
+      tags:
+      - admin
+      summary: Crear y dar de alta un producto.
+      description: Creación y alta de un producto en la base de datos.
+      parameters:
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      requestBody:
+        description: Stock debe tomar el valor 0 en caso de no estar disponible y
+          el valor 1 si hay unidades.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/postProduct'
+        required: true
+      responses:
+        "201":
+          description: Producto creado y registrado en la base de datos.
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "500":
+          description: Error al crear el producto.
+  /admin/pedidos:
+    get:
+      tags:
+      - admin
+      summary: Listado de todos los pedidos.
+      description: Listado completo de todos los pedidos realizados ordenados por
+        estado.
+      parameters:
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ordersList'
+        "404":
+          description: Aún no hay pedidos.
+        "500":
+          description: Error.
+    put:
+      tags:
+      - admin
+      summary: Modificación de estado de pedido.
+      description: Permite al administrador modificar el estado de un pedido en particular.
+      parameters:
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: Estado de pedido actualizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orderStatus'
+        "500":
+          description: Error al actualizar el estado del pedido.
+  /admin/pedido/:id:
+    get:
+      tags:
+      - admin
+      summary: Obtener pedido por id.
+      description: Obtener el detalle completo de un pedido por su id.
+      parameters:
+      - name: idOrder
+        in: path
+        description: Mediante este valor, el id del pedido, se podrá obtener el resumen
+          completo del pedido.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: Pedido completo.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/completeOrder'
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "404":
+          description: No hay ningún pedido asociado a ese id.
+        "500":
+          description: Error.
+  /usuarios:
+    get:
+      tags:
+      - admin
+      summary: Listar usuarios.
+      description: Obtener el listado completo de usuarios registrados en la aplicación.
+      parameters:
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getUser'
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "404":
+          description: El usuario no existe.
+        "500":
+          description: Error.
+  /usuario/:usuario:
+    get:
+      tags:
+      - admin
+      summary: Obtener usuario.
+      description: Obtener el detalle completo de un usuario en particular.
+      parameters:
+      - name: user
+        in: path
+        description: Mediante este valor se podrá encontrar al usuario. Debe completarse
+          con nombre de usuario(username) o email.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: jdoe
+      - name: token
+        in: header
+        description: El usuario con perfil de administrador obtiene el token al loguearse.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+      responses:
+        "200":
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/usersList'
+        "401":
+          description: No tiene los permisos para realizar esta operación.
+        "404":
+          description: No hay usuarios registrados.
+        "500":
+          description: Error.
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        usuario:
+          type: string
+          example: csagan
+        email:
+          type: string
+          example: csagan@mail.com
+        contrasena:
+          type: string
+          example: aspacetimeodyssey
+        nombre:
+          type: string
+          example: Carl
+        apellido:
+          type: string
+          example: Sagan
+        telefono:
+          type: string
+          example: "114458899"
+        direccion_envio:
+          type: string
+          example: Milky Way 717
+    loginData:
+      type: object
+      properties:
+        usuario:
+          type: string
+          example: csagan
+        contrasena:
+          type: string
+          example: aspacetimeodyssey
+    token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMwMzk5MDJ9.iBgFPOHTJewc1kHsrA8YUMIbbUNptP4Gbm9tiqZRXZk
+    product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        descripcion:
+          type: string
+          example: Pizza Margherita
+        precio:
+          type: number
+        stock:
+          $ref: '#/components/schemas/stock'
+        url_imagen:
+          type: string
+          example: img/pizza_margherita.jpg
+    stock:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Buffer
+        data:
+          type: array
+          items:
+            type: array
+            example: 1
+    products:
+      type: array
+      items:
+        $ref: '#/components/schemas/product'
+    favorite:
+      type: object
+      properties:
+        url_imagen:
+          type: string
+          example: img/pizza_marinara.jpg
+        descripcion:
+          type: string
+          example: Pizza Marinara
+        precio:
+          type: number
+    newOrder:
+      type: object
+      properties:
+        id_usuario:
+          type: integer
+          example: 3
+        id_forma_pago:
+          type: integer
+          example: 2
+        detalle:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderDetail'
+    orderDetail:
+      type: object
+      properties:
+        id_producto:
+          type: integer
+          example: 2
+        q_unidades:
+          type: integer
+          example: 1
+    orderResume:
+      type: object
+      properties:
+        estado:
+          type: string
+          example: Nuevo
+        detalle:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderDetailProduct'
+        forma_pago:
+          type: string
+          example: Debito
+        importe_final:
+          type: number
+        direccion_envio:
+          type: string
+          example: Av Secreta 13
+    orderDetailProduct:
+      type: object
+      properties:
+        descripcion:
+          type: string
+          example: 2 Pizza Marinara
+        precio:
+          type: number
+    postProduct:
+      type: object
+      properties:
+        descripcion:
+          type: string
+          example: Pizza Quattro Formaggi
+        precio:
+          type: number
+        stock:
+          type: number
+          example: 1
+        url_imagen:
+          type: string
+          example: /img/pizza_quattro_formaggi.jpg
+    ordersList:
+      type: array
+      items:
+        $ref: '#/components/schemas/orderResumeAdmin'
+    completeOrder:
+      type: object
+      properties:
+        estado:
+          type: string
+          example: Nuevo
+        detalle:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderDetailProduct'
+        forma_pago:
+          type: string
+          example: Debito
+        importe_final:
+          type: number
+        direccion_envio:
+          type: string
+          example: Av Secreta 13
+        telefono:
+          type: string
+          example: "114251100"
+        emai:
+          type: string
+          example: jdoe@mail.com
+        nombre:
+          type: string
+          example: John
+        apellido:
+          type: string
+          example: Doe
+    orderResumeAdmin:
+      type: object
+      properties:
+        estado:
+          type: string
+          example: Nuevo
+        hora:
+          type: string
+          example: 2020-06-24T20:38:26.000Z
+        detalle:
+          type: string
+          example: 1 Pizza de alcachofas 2 Pizza Marinara 1 Pizza Margherita
+        pago:
+          type: string
+          example: Debito
+        importe_final:
+          type: number
+        apellido:
+          type: string
+          example: Doe
+        nombre:
+          type: string
+          example: John
+        direccion_envio:
+          type: string
+          example: Av Secreta 13
+    orderStatus:
+      type: object
+      properties:
+        id_pedido:
+          type: integer
+          example: 1
+        id_estado:
+          type: integer
+          example: 2
+    getUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3
+        usuario:
+          type: string
+          example: jdoe
+        email:
+          type: string
+          example: jdoe@mail.com
+        nombre:
+          type: string
+          example: John
+        apellido:
+          type: string
+          example: Doe
+        telefono:
+          type: string
+          example: "114251100"
+        direccion_envio:
+          type: string
+          example: Av. Secreta 13
+    usersList:
+      type: array
+      items:
+        $ref: '#/components/schemas/getUser'

@@ -1,0 +1,553 @@
+{
+	"info": {
+		"_postman_id": "8df82a24-1477-4028-bb53-408b163353a3",
+		"name": "delilah",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "productos",
+					"item": [
+						{
+							"name": "Get All Products",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/admin/productos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"productos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/admin/producto/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"producto",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Product",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"descripcion\": \"Pizza Quattro Formagi\",\n    \"precio\": 330.00,\n    \"stock\": 1,\n    \"url_imagen\": \"../img/pizza_quattro_formaggi.jpg\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/admin/producto/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"producto",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Produtc",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"descripcion\": \"Pizza Quattro Formaggi\",\n    \"precio\": 340.00,\n    \"stock\": 0,\n    \"url_imagen\": \"../img/pizza_quattro_formaggi.jpg\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/admin/producto/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"producto",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/admin/producto/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"producto",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "pedidos",
+					"item": [
+						{
+							"name": "Get Order",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/admin/pedido/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"pedido",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/admin/pedidos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"pedidos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set Order State",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_pedido\": 1,\n    \"id_estado\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/admin/pedido",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"pedido"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "clientes",
+					"item": [
+						{
+							"name": "Get Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/admin/usuarios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"usuarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXN1YXJpbyI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImNvbnRyYXNlbmEiOiIkMmIkMTAkMEh5dlhRZGhZQUdrN1JjUThTZU5udWdKUER1aEh3NHhTdGVra3lrUEt0T1NkTXFnQ1Z0T1ciLCJub21icmUiOiJTYW50aWFnbyIsImFwZWxsaWRvIjoiRmFpbiIsInRlbGVmb25vIjoiMzUxMjAwMTAyMCIsImRpcmVjY2lvbl9lbnZpbyI6IkF2LiBTZWNyZXRhIDIwMjAiLCJlc19hZG1pbiI6eyJ0eXBlIjoiQnVmZmVyIiwiZGF0YSI6WzFdfSwiaWF0IjoxNTkzMjg4MTkyfQ.JALu6-CGt_PsDrqvhfoMa4vj4z_2W8DeuaY_PeWAi_w",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/admin/usuario/jdoe",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"admin",
+										"usuario",
+										"jdoe"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Admin login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usuario\": \"admin\",\n    \"contrasena\": \"sfain\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "clientes",
+			"item": [
+				{
+					"name": "signup cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"usuario\": \"csagan\",\n        \"email\": \"csagan@mail.com\",\n        \"contrasena\": \"csagan\",\n        \"nombre\": \"Carl\",\n        \"apellido\": \"Sagan\",\n        \"telefono\": \"35120010121\",\n        \"direccion_envio\": \"Av. Milky Way 1996\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/clientes/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientes",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Client Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usuario\": \"jdoe\",\n    \"contrasena\": \"jdoe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/clientes/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientes",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMyOTAwNjV9.wjFu-SvrlZE5inTpu-HalJJ1tiM9_uD-92gVviH9v_o",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/clientes/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientes",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Favorites",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMyOTAwNjV9.wjFu-SvrlZE5inTpu-HalJJ1tiM9_uD-92gVviH9v_o"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/clientes/productos/favoritos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientes",
+								"productos",
+								"favoritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set pedido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMyOTAwNjV9.wjFu-SvrlZE5inTpu-HalJJ1tiM9_uD-92gVviH9v_o",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_usuario\": 3,\n    \"id_forma_pago\": 2,\n    \"detalle\": [\n        {\n            \"id_producto\": 2,\n            \"q_unidades\": 1\n        },\n        {\n            \"id_producto\": 1,\n            \"q_unidades\": 2\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/clientes/pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientes",
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order Detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXN1YXJpbyI6Impkb2UiLCJlbWFpbCI6Impkb2VAbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJiJDEwJGxyY3lOWFF6NlB1VUtFTTNmV1pRSE9pNS5sZXhWSGxldVJGai80cmlRN0tIMXFvLi9YSHp1Iiwibm9tYnJlIjoiSm9obiIsImFwZWxsaWRvIjoiRG9lIiwidGVsZWZvbm8iOiIxMTQyNTExMDAiLCJkaXJlY2Npb25fZW52aW8iOiJBdi4gU2VjcmV0YSAxMyIsImVzX2FkbWluIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbMF19LCJpYXQiOjE1OTMyOTAwNjV9.wjFu-SvrlZE5inTpu-HalJJ1tiM9_uD-92gVviH9v_o",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/clientes/pedido/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientes",
+								"pedido",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

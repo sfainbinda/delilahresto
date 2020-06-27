@@ -40,7 +40,7 @@ CREATE TABLE pedidos (
   importe_final DECIMAL(7,2),
   id_forma_pago INT NOT NULL
   );
-
+  
 CREATE TABLE detalle_pedido (
 id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
 id_pedido INT NOT NULL,
@@ -81,8 +81,8 @@ INSERT INTO estados_pedido (descripcion) VALUE ('Enviando');
 INSERT INTO estados_pedido (descripcion) VALUE ('Cancelado');
 INSERT INTO estados_pedido (descripcion) VALUE ('Entregado');
 
-INSERT INTO usuarios (usuario, email, contrasena, nombre, apellido, telefono, direccion_envio, es_admin) VALUES ('admin', 'admin@mail.com', 'admin', 'John', 'Doe', '3512001020', 'Av. Secreta 2020', 1);
-INSERT INTO usuarios (usuario, email, contrasena, nombre, apellido, telefono, direccion_envio, es_admin) VALUES ('csagan', 'csagan@mail.com', 'csagan', 'Carl', 'Sagan', '3512001021', 'Av. Milky Way 1996', 0);
+INSERT INTO usuarios (usuario, email, contrasena, nombre, apellido, telefono, direccion_envio, es_admin) VALUES ('admin', 'admin@mail.com', '$2b$10$0HyvXQdhYAGk7RcQ8SeNnugJPDuhHw4xStekkykPKtOSdMqgCVtOW', 'Santiago', 'Fain', '3512001020', 'Av. Secreta 2020', 1);
+INSERT INTO usuarios (usuario, email, contrasena, nombre, apellido, telefono, direccion_envio, es_admin) VALUES ('csagan', 'csagan@mail.com', '$2b$10$2tjNSl4ORS/7tKV.jU8Aeu/USdvPt72Zn7K0S0MbdUYy4/DlavfL.', 'Carl', 'Sagan', '3512001021', 'Av. Milky Way 1996', 0);
 
 INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza de alcachofas', 320.00, 1, '../img/pizza_alcachofas.jpg');
 INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza Margherita', 290.00, 1, '../img/pizza_margherita.jpg');
@@ -90,3 +90,4 @@ INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza Ma
 INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza Prosciutto', 320.00, 1, '../img/pizza_prosciutto.jpg');
 INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza Quattro Formagi', 330.00, 1, '../img/pizza_quattro_formaggi.jpg');
 INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza de queso de cabra', 350.00, 1, '../img/pizza_queso_cabra.jpg');
+

@@ -7,13 +7,14 @@ const moment = require('moment');
 //ADMIN FUNCTIONS
 async function login(req, res) {
     const key = process.env.SECRET_KEY;
-    const statement = process.env.GET_USER_BY_USERNAME_EMAIL;
+    const statement = process.env.GET_USER_BY_USERNAME_EMAIL_COMPLETE;
     const user = req.body;
 
     try {
         let userFound = await database.query(statement, { replacements: [user.usuario, user.email] });
         userFound = userFound[0];
         userFound = userFound[0];
+        console.log(userFound !== 'undefined')
         if (userFound !== 'undefined') {
             userFound = JSON.parse(JSON.stringify(userFound));
             let match = await bcrypt.compareSync(user.contrasena, userFound.contrasena); //no da lo mismo el orden de los parámetros.
@@ -25,6 +26,7 @@ async function login(req, res) {
             }
         }
     } catch (error) {
+        console.log(error);
         res.status(500).send('Usuario no registrado.');
     }
 }
@@ -46,7 +48,11 @@ async function getProduct(req, res) {
     try {
         let product = await database.query(statement, {replacements: [req.params.id]});
         product = product[0];
-        res.json(product);
+        if(product.length > 0) {
+            res.json(product);
+        } else {
+            res.status(404).send('El producto no existe.');
+        }
     } catch (error) {
         console.log(error);
     }
@@ -59,37 +65,52 @@ async function postProduct(req, res) {
         await database.query(statement, { replacements: newProduct });
         res.status(201).send('Producto creado y registrado en la base de datos.');
     } catch (error) {
-        res.status(500).send(`${error}`);
+        res.status(500).send('Error al crear el producto.');
     }
 }
 
 async function updateProduct(req, res) {
     let product = req.body;
     const statement = process.env.UPDATE_PRODUCT;
+    const searchStatement = process.env.GET_PRODUCT;
     try {
-        await database.query(statement, {replacements: [
-            product.descripcion,
-            product.precio,
-            product.stock,
-            product.url_imagen,
-            product.id
-        ]});
-        res.status(203).send('Producto actualizado exitosamente.');
+        let search = await database.query(searchStatement, {replacements: [req.params.id]})
+        search = search[0];
+        if (search.length > 0) {
+            await database.query(statement, {replacements: [
+                product.descripcion,
+                product.precio,
+                product.stock,
+                product.url_imagen,
+                req.params.id
+            ]});
+            res.status(200).send('Producto actualizado exitosamente.');
+        } else {
+            res.status(404).send('El producto que intenta modificar no existe.');
+        }
+        
     } catch (error) {
         console.log(error);
-        res.status(500).send(`Error al actualizar producto. ${error}`);
+        res.status(500).send('Error al modificar el producto.');
     }
 }
 
 async function deleteProduct(req, res) {
     const statement = process.env.DELETE_PRODUCT;
-    console.log(statement);
+    const searchStatement = process.env.GET_PRODUCT;
+    let id = req.params.id;
     try {
-        console.log(req.params.id);
-        await database.query(statement, {replacements: [req.params.id]});
-        res.status(200).send('El producto ha sido eliminado de manera exitosa.');
+        let search = await database.query(searchStatement, {replacements: [id]});
+        search = search[0];
+        if(search.length > 0 ){
+            await database.query(statement, {replacements: [id]});
+            res.status(200).send('El producto ha sido eliminado de manera exitosa.');
+        } else {
+            res.status(404).send('El producto que intenta eliminar no existe.');
+        }
     } catch (error) {
-        res.status(500).send(`${error}`);
+        console.log(error);
+        res.status(500).send('Error la intentar eliminar el producto.');
     }
 }
 
@@ -100,9 +121,9 @@ async function getOrders (req, res) {
         let orders = await database.query(statement);
         orders = orders[0];
         if (orders.length === 0) {
-            res.send('Aún no hay pedidos.');
+            res.status(404).send('Aún no hay pedidos.');
         } else {
-            res.send(orders);
+            res.status(200).send(orders);
         }
     } catch (error) {
         console.log('Error.', error);
@@ -144,7 +165,7 @@ async function getOrderStatus(req, res) {
             res.status(404).send('No hay ningún pedido asociado a ese id.');
         }
     } catch (error) {
-        res.status(500).send();
+        res.status(500).send('Error.');
     }
 }
 
@@ -156,7 +177,7 @@ async function updateState(req, res) {
         res.status(200).send('Estado de pedido actualizado.');
     } catch (error) {
         console.log(error);
-        res.status(500).send(`Error al actualizar el estado del pedido. ${error}`);
+        res.status(500).send('Error al actualizar el estado del pedido.');
     }
 }
 
@@ -167,12 +188,13 @@ async function getUsers(req, res) {
         let users = await database.query(statement);
         users = users[0];
         if (users.length === 0) {
-            res.send('No hay usuarios registrados.');
+            res.status(404).send('No hay usuarios registrados.');
         } else {
             res.json(users);
         }
     } catch (error) {
-        console.log('Error.', error);
+        console.log(error);
+        console.log('Error.');
     }
 }
 
@@ -181,7 +203,6 @@ async function getUser(req, res) {
     try {
         let user = await database.query(statement, { replacements: [req.params.usuario, req.params.usuario] });
         user = user[0];
-        console.log(user);
         if (user.length === 0) {
             res.send('El usuario no existe.');
         } else {
@@ -189,6 +210,7 @@ async function getUser(req, res) {
         }
     } catch (error) {
         console.log(error);
+        res.status(500).send('Error');
     }
 }
 

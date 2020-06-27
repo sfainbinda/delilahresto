@@ -7,7 +7,7 @@ const moment = require('moment');
 //GENERAL FUNCTIONS
 async function login(req, res) {
     const key = process.env.SECRET_KEY;
-    const statement = process.env.GET_USER_BY_USERNAME_EMAIL;
+    const statement = process.env.GET_USER_BY_USERNAME_EMAIL_COMPLETE;
     const user = req.body;
 
     try {

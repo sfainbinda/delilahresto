@@ -18,6 +18,7 @@ router.delete('/producto/:id', adminMiddlewares.isAdmin, adminControllers.delete
 router.get('/pedidos', adminMiddlewares.isAdmin, adminControllers.getOrders);
 router.get('/pedido/:id', adminMiddlewares.isAdmin, adminControllers.getOrderStatus);
 router.put('/pedido', adminMiddlewares.isAdmin, adminControllers.updateState);
+router.delete('/pedido/:id', adminMiddlewares.isAdmin, adminControllers.deleteOrder);
 
 //Users routes
 router.get('/usuarios', adminMiddlewares.isAdmin, adminControllers.getUsers);

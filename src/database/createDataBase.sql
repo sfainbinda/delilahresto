@@ -52,23 +52,23 @@ subtotal DECIMAL(7,2) NOT NULL
 
 ALTER TABLE detalle_pedido
 ADD CONSTRAINT FK_DETALLE_PRODUCTOS
-FOREIGN KEY (id_producto) REFERENCES productos(id);
+FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE;
 
 ALTER TABLE detalle_pedido
 ADD CONSTRAINT FK_DETALLE_PEDIDOS
-FOREIGN KEY (id_pedido) REFERENCES pedidos(id);
+FOREIGN KEY (id_pedido) REFERENCES pedidos(id) ON DELETE CASCADE;
 
 ALTER TABLE pedidos
 ADD CONSTRAINT FK_ESTADOS_PEDIDOS
-FOREIGN KEY (id_estado) REFERENCES estados_pedido(id);
+FOREIGN KEY (id_estado) REFERENCES estados_pedido(id) ON DELETE CASCADE;
 
 ALTER TABLE pedidos
 ADD CONSTRAINT FK_PAGO_PEDIDOS
-FOREIGN KEY (id_forma_pago) REFERENCES formas_pago(id);
+FOREIGN KEY (id_forma_pago) REFERENCES formas_pago(id) ON DELETE CASCADE;
 
 ALTER TABLE pedidos
 ADD CONSTRAINT FK_USUARIO_PEDIDOS
-FOREIGN KEY (id_usuario) REFERENCES usuarios(id);
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE;
 
 INSERT INTO formas_pago (descripcion) VALUE ('efectivo');
 INSERT INTO formas_pago (descripcion) VALUE ('debito');
@@ -90,4 +90,3 @@ INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza Ma
 INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza Prosciutto', 320.00, 1, '../img/pizza_prosciutto.jpg');
 INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza Quattro Formagi', 330.00, 1, '../img/pizza_quattro_formaggi.jpg');
 INSERT INTO productos (descripcion, precio, stock, url_imagen) VALUES ('Pizza de queso de cabra', 350.00, 1, '../img/pizza_queso_cabra.jpg');
-

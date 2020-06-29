@@ -214,6 +214,24 @@ async function getUser(req, res) {
     }
 }
 
+async function deleteOrder(req, res) {
+    const statement = process.env.GET_ORDER;
+    const deleteStatement = process.env.DELETE_ORDER;
+    try {
+        let order = await database.query(statement, { replacements: [req.params.id]});
+        order = order [0];
+        if (order.length > 0) {
+            await database.query(deleteStatement, { replacements: [req.params.id]});
+            res.status(200).send('Pedido eliminado.');
+        } else {
+            res.status(404).send('No hay ningún pedido asociado a ese id.');
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al intentar eliminar el pedido.');
+    }
+}
+
 module.exports = {
     login,
     getProducts,
@@ -225,5 +243,6 @@ module.exports = {
     getOrderStatus,
     updateState,
     getUsers,
-    getUser
+    getUser,
+    deleteOrder
 }

@@ -198,6 +198,7 @@ async function postOrder(req, res) {
                     })
             })
     } catch (error) {
+        console.log(error);
         res.status(500).send('No fue posible realizar el pedido.');
     }
 }
